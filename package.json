@@ -1,0 +1,22 @@
+{
+  "name": "node-js-class",
+  "version": "1.0.0",
+  "description": "Traninig class",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kipps/epam.node-js.shevchenko.git"
+  },
+  "author": "Roman Shevchenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kipps/epam.node-js.shevchenko/issues"
+  },
+  "homepage": "https://github.com/kipps/epam.node-js.shevchenko#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
