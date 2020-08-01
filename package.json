@@ -19,5 +19,8 @@
   "homepage": "https://github.com/kipps/epam.node-js.shevchenko#readme",
   "devDependencies": {
     "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
   }
 }
