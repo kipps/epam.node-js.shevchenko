@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "0c0113b3-f24f-4612-a49b-ecc10e093ef0",
+		"name": "node js",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Get all users\n"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"login\": \"Roman\",\n        \"password\": \"dqwdwdw12345\",\n        \"age\": 32\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Create user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/user/0",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"0\",\n\t\"name:\"Test\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/user/0",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"0"
+					]
+				},
+				"description": "Change user's data"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/user/0?id=3232",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"id\": 0,\n        \"login\": \"John\",\n        \"password\": \"12345\",\n        \"age\": 24,\n        \"isDeleted\": false\n    }"
+				},
+				"url": {
+					"raw": "localhost:3000/user/0?id=3232",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"0"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3232"
+						}
+					]
+				},
+				"description": "Soft delete of user"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
