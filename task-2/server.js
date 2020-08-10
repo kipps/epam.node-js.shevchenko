@@ -20,12 +20,27 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 //GET all users
 server.get('/user', (req, res) => {
+  console.log('get');
   res.json(users);
 });
 
 //GET the user with specified id
 server.get('/user/:id', function (req, res) {
   res.json(users[req.params.id]);
+});
+
+//GET sort by login
+server.get('/users-sorted', function (req, res) {
+  console.log('sorted');
+  res.json(users.sort((a, b) => {
+    if (a.login > b.login) {
+      return 1;
+    }
+    if (a.login < b.login) {
+      return -1;
+    }
+    return 0;
+  }));
 });
 
 //POST new user
@@ -35,7 +50,7 @@ server.post('/user', (req, res) => {
     login: req.body.login,
     password: req.body.password,
     age: req.body.age,
-    isDeleted: true,
+    isDeleted: false,
   };
   users.push(result); res.json(result);
 });
