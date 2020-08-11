@@ -1,52 +1,60 @@
 const Joi = require('@hapi/joi');
-const validator = require('express-joi-validation').createValidator({})
+const validator = require('express-joi-validation').createValidator();
 
 const express = require("express"),
-  bodyParser = require("body-parser"),
   server = express();
 
 const users = require('./Users');
 
-const querySchema = Joi.object({
-  id: Joi.string().required()
-});
+const userValidator = validator.body(Joi.object({
+  // id: Joi.string().optional(),
+  // isDeleted: Joi.bool().optional(),
+  login: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required(),
+  password: Joi.string().regex(/^[\w]{8,30}$/),
+  age: Joi.number()
+    .integer()
+    .min(4)
+    .max(130),
+}));
 
 //body parser for parsing request body
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: true }));
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
 //temperary store for `user` in memory
 
 
 //GET all users
-server.get('/user', (req, res) => {
-  console.log('get');
-  res.json(users);
+server.get('/users', (req, res) => {
+  let result = users;
+  if(req.query.sortBy === 'login') {
+    result.sort((a, b) => {
+      if (a.login > b.login) {
+        return 1;
+      }
+      if (a.login < b.login) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+  res.json(result);
 });
 
 //GET the user with specified id
 server.get('/user/:id', function (req, res) {
-  res.json(users[req.params.id]);
-});
-
-//GET sort by login
-server.get('/users-sorted', function (req, res) {
-  console.log('sorted');
-  res.json(users.sort((a, b) => {
-    if (a.login > b.login) {
-      return 1;
-    }
-    if (a.login < b.login) {
-      return -1;
-    }
-    return 0;
-  }));
+  const user = users.find(item => item.id === req.params.id);
+  res.json(user);
 });
 
 //POST new user
-server.post('/user', (req, res) => {
+server.post('/user', userValidator, (req, res) => {
   let result = {
-    id: `f${(~~(Math.random()*1e8)).toString(16)}`,
+    id: `f${(~~(Math.random() * 1e8)).toString(16)}`,
     login: req.body.login,
     password: req.body.password,
     age: req.body.age,
@@ -56,7 +64,7 @@ server.post('/user', (req, res) => {
 });
 
 //PUT edited user in-place of item with specified id
-server.put('/user/:id', (req, res) => {
+server.put('/user/:id', userValidator, (req, res) => {
   users[req.params.id] = req.body;
   res.json(req.body);
 });
