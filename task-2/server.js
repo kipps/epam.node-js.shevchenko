@@ -50,7 +50,6 @@ server.get('/users', (req, res) => {
 
 // GET the user with specified id
 server.get('/user/:id', (req, res) => {
-  console.log(users);
   const user = users.find((item) => item.id === req.params.id);
   res.json(user);
 });
@@ -84,6 +83,7 @@ server.delete('/user/:id', (req, res) => {
   for (let i = 0; i < users.length; i++) {
     if (users[i].id == req.params.id) {
       users[i].isDeleted = true;
+      res.json(users[i]);
     }
   }
   res.json(req.body);
