@@ -29,6 +29,12 @@ server.use(express.urlencoded({ extended: true }));
 // GET all users
 server.get('/users', (req, res) => {
   let result = users;
+   if (req.query.login) {
+    result = users.filter((user) => user.login.includes(req.query.login));
+  }
+  if (req.query.limit) {
+    result = result.slice(0, req.query.limit);
+  }
   result.sort((a, b) => {
     if (a.login > b.login) {
       return 1;
@@ -38,13 +44,6 @@ server.get('/users', (req, res) => {
     }
     return 0;
   });
-  
-   if (req.query.login) {
-    result = users.filter((user) => user.login.includes(req.query.login));
-    if (req.query.limit) {
-      result = result.slice(0, req.query.limit);
-    }
-  }
   res.json(result);
 });
 
@@ -68,28 +67,19 @@ server.post('/user', userValidator, (req, res) => {
 
 // PUT edited user in-place of item with specified id
 server.put('/user/:id', userValidator, (req, res) => {
-  // let result = users.findIndex(value => value[req.params.id]);
-  // console.log(result);
-
-  for (let i=0; i<users.length; i++) {
-      if(users[i].id == req.params.id) {
-          users[i].login = req.body.login ? req.body.login :  users[i].login;
-          users[i].password = req.body.password ? req.body.password :  users[i].password;
-          users[i].age = req.body.age ? req.body.age :  users[i].age;
-      }
+  const i = users.findIndex(u => u.id === req.params.id);
+  users[i] = {
+          ...users[i],
+          ...req.body,
   }
-  res.json(req.body);
+  res.json(users[i]);
 });
 
 // DELETE user with specified id
 server.delete('/user/:id', (req, res) => {
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id == req.params.id) {
-      users[i].isDeleted = true;
-      res.json(users[i]);
-    }
-  }
-  res.json(req.body);
+  const userIndex = users.findIndex(u => u.id === req.params.id);
+  users[userIndex].isDeleted = true;
+  res.json(users[userIndex]);
 });
 
 // START SERVER
