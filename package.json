@@ -41,6 +41,8 @@
     "@hapi/joi": "^17.1.1",
     "csvtojson": "^2.0.10",
     "express": "^4.17.1",
-    "express-joi-validation": "^4.0.4-beta.0"
+    "express-joi-validation": "^4.0.4-beta.0",
+    "pg": "^8.3.2",
+    "sequelize": "^6.3.4"
   }
 }
