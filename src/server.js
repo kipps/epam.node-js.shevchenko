@@ -3,7 +3,7 @@ import express from 'express';
 import { createValidator } from 'express-joi-validation';
 
 const server = express();
-const users = require('./Users');
+const users = require('./models/Users');
 
 const validator = createValidator();
 
@@ -27,8 +27,8 @@ server.use(express.urlencoded({ extended: true }));
 // temperary store for `user` in memory
 
 // GET all users
-server.get('/users', (req, res) => {
-    let result = users;
+server.get('/users',  async (req, res) => {
+    let result = await User.findAll();
     if (req.query.login) {
         result = users.filter((user) => user.login.includes(req.query.login));
     }
