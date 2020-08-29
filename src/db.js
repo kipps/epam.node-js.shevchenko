@@ -1,23 +1,18 @@
 const { Sequelize, DataTypes, QueryTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('users', 'root', 'admin', {
+const sequelize = new Sequelize('postgres', 'postgres', 'kipps87', {
     dialect: "postgres"
 });
 
 class User extends Model {}
 User.init({
-    pk: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-    id: DataTypes.STRING,
     login: DataTypes.STRING,
     password: DataTypes.STRING,
     age: DataTypes.INTEGER,
     isdeleted: DataTypes.BOOLEAN
 }, {
     sequelize,
-    modelName: 'users '
+    tableName: 'users',
+    timestamps: false
 });
 
 sequelize.sync();
