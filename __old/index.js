@@ -1,11 +1,11 @@
 import Joi  from '@hapi/joi';
 import express from 'express';
 import { createValidator } from 'express-joi-validation';
+import {UserService} from '../services/UserService';
+import {UserModel} from '../models/UserModel';
+import initSequelize from "../models";
 
 const server = express();
-// const users = require('./models/Users');
-const {User} = require('./db');
-
 const validator = createValidator();
 
 const userValidator = validator.body(Joi.object({
@@ -25,11 +25,11 @@ const userValidator = validator.body(Joi.object({
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
-// temperary store for `user` in memory
 
 // GET all users
 server.get('/users',  async (req, res) => {
-    let result = await User.findAll();
+    let result = await initSequelize.findAll();
+    // getAllUsers(req.query.login, req.query.limit);
     if (req.query.login) {
         result = result.filter((user) => user.login.includes(req.query.login));
     }
@@ -50,7 +50,7 @@ server.get('/users',  async (req, res) => {
 
 // GET the user with specified id
 server.get('/user/:id', async (req, res) => {
-    const user = await User.findAll(
+    const user = await UserModel.findAll(
         {
             where: {
                 id:req.params.id
@@ -62,15 +62,19 @@ server.get('/user/:id', async (req, res) => {
 
 // POST new user
 server.post('/user', userValidator, async (req, res) => {
-    const user = User.create({
-        ...req.body
-    });
+    // const user = await UserModel.create({
+    //     ...req.body
+    // });
+
+    const userServiceInstance = new UserService(UserModel);
+    const user = await userServiceInstance.creatUser(req.body);
+
     res.json(user);
 });
 
 // PUT edited user in-place of item with specified id
 server.put('/user/:id', userValidator, async (req, res) => {
-    const user = await User.update(
+    const user = await UserModel.update(
         {
             ...req.body
         },
@@ -85,7 +89,7 @@ server.put('/user/:id', userValidator, async (req, res) => {
 
 // DELETE user with specified id
 server.delete('/user/:id', async (req, res) => {
-    const user = await User.update(
+    const user = await UserModel.update(
         {
             isdeleted: true
         },

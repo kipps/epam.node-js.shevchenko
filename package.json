@@ -2,13 +2,13 @@
   "name": "node-js-class",
   "version": "1.0.0",
   "description": "Traninig class",
-  "main": "src/index.js",
+  "main": "src/api/index.js",
   "scripts": {
     "test": "test",
     "lint": "eslint src ",
     "lint:fix": "eslint src --fix",
     "nodemon-babel": "nodemon --exec babel-node",
-    "express-start": "npm run nodemon-babel src/index.js"
+    "express-start": "npm run nodemon-babel src/app.js"
   },
   "repository": {
     "type": "git",
