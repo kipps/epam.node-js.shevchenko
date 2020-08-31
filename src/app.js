@@ -41,35 +41,28 @@ sequelize.sync();
 
 // const userRouter = UserController(router);
 
-router.get('/users', async (req, res) => {
-    let result = await userService.getUsers(req.query.login, req.query.limit);
-    res.json(result);
-});
-
-router.post('/users', userValidator, async (req, res) => {
-    let result = await userService.creatUser(req.body);
-    res.json(result);
-});
-
-router.get('/user/:id', async (req, res) => {
-    let result = await userService.getUser(req.params.id);
-    res.json(result);
-});
-
-router.put('/user/:id', userValidator, async (req, res) => {
-    let result = await userService.updateUser(req.body, req.params.id);
-    res.json(result);
-});
-
-router.put('/user/:id', userValidator, async (req, res) => {
-    let result = await userService.updateUser(req.body, req.params.id);
-    res.json(result);
-});
-
-router.delete('/user/:id', async (req, res) => {
-    let result = await userService.deleteUser(req.params.id);
-    res.json(result);
-});
+router
+    .get('/users', async (req, res) => {
+        let result = await userService.getUsers(req.query.login, req.query.limit);
+        res.json(result);
+    })
+    .post('/users', userValidator, async (req, res) => {
+        let result = await userService.creatUser(req.body);
+        res.json(result);
+    })
+    .get('/users/:id', async (req, res) => {
+        console.log('test');
+        let result = await userService.getUser(req.params.id);
+        res.json(result);
+    })
+    .put('/users/:id', userValidator, async (req, res) => {
+        let result = await userService.updateUser(req.body, req.params.id);
+        res.json(result);
+    })
+    .delete('/users/:id', async (req, res) => {
+        let result = await userService.deleteUser(req.params.id);
+        res.json(result);
+    });
 
 // START SERVER
 app.listen(3000, () => {
