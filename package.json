@@ -8,7 +8,7 @@
     "lint": "eslint src ",
     "lint:fix": "eslint src --fix",
     "nodemon-babel": "nodemon --exec babel-node",
-    "express-start": "npm run nodemon-babel src/app.js"
+    "start": "npm run nodemon-babel src/app.js"
   },
   "repository": {
     "type": "git",

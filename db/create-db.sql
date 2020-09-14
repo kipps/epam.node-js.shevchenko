@@ -6,6 +6,18 @@ CREATE TABLE users(
      ISDELETED   BOOLEAN DEFAULT FALSE
 );
 
+CREATE TABLE groups (
+    id SERIAL PRIMARY KEY,
+    name text,
+    premissions text[] NOT NULL
+);
+
+CREATE TABLE user_group (
+    id SERIAL PRIMARY KEY,
+    user_id integer REFERENCES users(id) ON UPDATE CASCADE,
+    group_id integer REFERENCES groups(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 INSERT INTO users (AGE, LOGIN, PASSWORD, ISDELETED)
 VALUES (28, 'Tom', 'sWdw34ssw', false);
 

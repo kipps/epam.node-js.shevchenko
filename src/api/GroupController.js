@@ -39,7 +39,19 @@ const groupRouter = (service) => {
         res.json(result);
     });
 
+    router.post('/group/:id/users/add', async  (req, res, next) => {
+        const id = req.params.id;
+        const usersIds = req.body;
+        console.log(req.body);
+        try {
+            const allUsers = await service.addUser(id, usersIds);
+            return res.json(allUsers);
+        } catch (error) {
+            return next(error);
+        }
+    });
+
     return router;
-}
+};
 
 export default groupRouter;
