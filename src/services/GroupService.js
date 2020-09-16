@@ -66,12 +66,9 @@ export default class GroupService {
       });
   }
 
-  async addUser(id, userId) {
-    await this.groupModel.findByPk(id, {
-      include: [
-        ...userId
-      ]
-    });
+  async addUsers(id, userIds) {
+    const group = await this.groupModel.findByPk(id);
+    group.addUsers(userIds);
   }
 
 }
