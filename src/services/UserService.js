@@ -1,7 +1,4 @@
-import {UserModel} from "../models/UserModel";
-
 export default class UserService {
-
     constructor(UserModel) {
         this.userModel = UserModel;
     }
@@ -33,14 +30,14 @@ export default class UserService {
         return this.userModel.findAll(
             {
                 where: {
-                    id: id
+                    id
                 }
             }
         );
     }
 
     creatUser(user) {
-        return this.userModel.create({...user});
+        return this.userModel.create({ ...user });
     }
 
     updateUser(user, id) {
@@ -50,22 +47,21 @@ export default class UserService {
             },
             {
                 where: {
-                    id: id
+                    id
                 }
             }
         );
     }
 
     deleteUser(id) {
-        return UserModel.update(
+        return this.userModel.update(
             {
                 isdeleted: true
             },
             {
                 where: {
-                    id: id
+                    id
                 }
             });
     }
-
 }
