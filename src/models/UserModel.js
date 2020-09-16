@@ -12,4 +12,4 @@ export const initUserModel = (sequelize) => {
         tableName: 'users',
         timestamps: false
     });
-}
+};
