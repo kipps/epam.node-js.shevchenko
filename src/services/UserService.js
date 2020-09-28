@@ -36,6 +36,15 @@ export default class UserService {
         );
     }
 
+    getUserByLogin(login) {
+        console.log(login);
+        return this.userModel.findAll({
+            where: {
+                login
+            }
+        })
+    }
+
     creatUser(user) {
         return this.userModel.create({ ...user });
     }

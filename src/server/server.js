@@ -6,10 +6,11 @@ import express from 'express';
 import invocationLogging from '../middlewares/invoketion-logging';
 import userRouter from '../api/UserController';
 import groupRouter from '../api/GroupController';
+import authRouter from '../api/AuthenticateController';
 import errorHandling from '../middlewares/error-handling';
 
 
-const runServer = (app, sequelize) => {
+const runServer = (app) => {
     const userService = new UserService(UserModel);
     const groupService = new GroupService(GroupModel);
 
@@ -23,13 +24,14 @@ const runServer = (app, sequelize) => {
     );
 
 
+    app.use(authRouter(userService));
     app.use(userRouter(userService));
     app.use(groupRouter(groupService));
 
 
     app.use(errorHandling);
 
-    sequelize.sync();
+
 
     // START SERVER
     app.listen(3000, () => {
