@@ -20,6 +20,8 @@ export function dbInit() {
     initUserGroupModel(sequelize);
     uniteModels(sequelize);
 
+    sequelize.sync();
+
     return {
         closeConnection: sequelize.close.bind(sequelize),
         sequelize

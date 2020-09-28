@@ -33,5 +33,5 @@ process.on('unhandledRejection', (error) => {
     }
 });
 
-runServer(app, db.sequelize);
+runServer(app);
 
