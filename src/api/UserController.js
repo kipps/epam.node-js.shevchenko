@@ -1,6 +1,7 @@
 import express from 'express';
 import Joi from '@hapi/joi';
 import { createValidator } from 'express-joi-validation';
+import checkToken from '../middlewares/checkToken';
 
 const validator = createValidator();
 const userValidator = validator.body(Joi.object({
@@ -19,7 +20,7 @@ const userValidator = validator.body(Joi.object({
 const userRouter = (service) => {
     const router = express.Router();
 
-    router.get('/users', async (req, res, next) => {
+    router.get('/users', checkToken, async (req, res, next) => {
         try {
             const result = await service.getUsers();
             res.json(result);
