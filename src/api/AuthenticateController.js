@@ -19,11 +19,15 @@ const authRouter = (service) => {
 
   router.post('/login', async (req, res, next) => {
     try {
-      const user = await service.getUserByLogin(req.body.login);
+      const result = await service.getUserByLogin(req.body.login);
+      const user = JSON.parse(JSON.stringify(result));
       if (user.length === 0) {
         return res.status(404).send(`Don't see this one user!`);
       }
-      const payload = {sub: user.id, login: user.login};
+      if(user[0].password !== req.body.password) {
+        return res.status(404).send(`Wrong password!`);
+      }
+      const payload = {sub: user[0].id, login: user[0].login};
       const token = jwt.sign(payload, 'secret_token', {expiresIn: 400});
       res.send(token);
     } catch (err) {
