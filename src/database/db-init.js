@@ -3,9 +3,10 @@ import { initGroupModel } from '../models/GroupModel';
 import { initUserGroupModel } from '../models/UserGroup';
 import uniteModels from '../models/UniteModels';
 import { Sequelize } from 'sequelize';
+import config from 'config';
 
 export function dbInit() {
-    const sequelize = new Sequelize('postgres', 'postgres', 'kipps87', {
+    const sequelize = new Sequelize(config.get('Config.dbConfig.name'), config.get('Config.dbConfig.user'), config.get('Config.dbConfig.password'), {
         dialect: 'postgres'
     });
 

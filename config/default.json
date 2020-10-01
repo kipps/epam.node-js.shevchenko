@@ -1,0 +1,13 @@
+{
+  "Config": {
+    "dbConfig": {
+      "name": "postgres",
+      "user": "postgres",
+      "password": "kipps87"
+    },
+    "Token": {
+      "secret_token": "fewfewf3345ewefewfeflkle334",
+      "duration": 10
+    }
+  }
+}

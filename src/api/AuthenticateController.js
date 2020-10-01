@@ -2,6 +2,7 @@ import express from 'express';
 import Joi from '@hapi/joi';
 import jwt from 'jsonwebtoken';
 import {createValidator} from 'express-joi-validation';
+import config from 'config';
 
 const validator = createValidator();
 const authValidator = validator.body(Joi.object({
@@ -19,16 +20,16 @@ const authRouter = (service) => {
 
   router.post('/login', async (req, res, next) => {
     try {
-      const result = await service.getUserByLogin(req.body.login);
-      const user = JSON.parse(JSON.stringify(result));
-      if (user.length === 0) {
-        return res.status(404).send(`Don't see this one user!`);
+      const user = await service.getUserByLogin(req.body.login);
+
+      if (!user) {
+        return res.status(403).send(`Don't see this one user!`);
       }
-      if(user[0].password !== req.body.password) {
-        return res.status(404).send(`Wrong password!`);
+      if(user.password !== req.body.password) {
+        return res.status(403).send(`Wrong password!`);
       }
-      const payload = {sub: user[0].id, login: user[0].login};
-      const token = jwt.sign(payload, 'secret_token', {expiresIn: 400});
+      const payload = {sub: user.id, login: user.login};
+      const token = jwt.sign(payload, config.get('Config.Token.secret_token'), {expiresIn: config.get('Config.Token.duration')});
       res.send(token);
     } catch (err) {
       return next(err);

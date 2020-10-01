@@ -1,6 +1,7 @@
 import express from 'express';
 import Joi from '@hapi/joi';
 import { createValidator } from 'express-joi-validation';
+import checkToken from '../middlewares/checkToken';
 
 const validator = createValidator();
 const groupValidator = validator.body(Joi.object({
@@ -14,7 +15,7 @@ const groupValidator = validator.body(Joi.object({
 const groupRouter = (service) => {
     const router = express.Router();
 
-    router.get('/groups', async (req, res, next) => {
+    router.get('/groups', checkToken, async (req, res, next) => {
         try {
             const result = await service.getGroups();
             res.json(result);
@@ -23,7 +24,7 @@ const groupRouter = (service) => {
         }
     });
 
-    router.post('/groups', groupValidator, async (req, res, next) => {
+    router.post('/groups', checkToken, groupValidator, async (req, res, next) => {
         try {
             const result = await service.creatGroup(req.body);
             res.json(result);
@@ -32,7 +33,7 @@ const groupRouter = (service) => {
         }
     });
 
-    router.get('/group/:id', async (req, res, next) => {
+    router.get('/group/:id', checkToken, async (req, res, next) => {
         try {
             const result = await service.getGroup(req.params.id);
             if (result.length === 0) {
@@ -44,7 +45,7 @@ const groupRouter = (service) => {
         }
     });
 
-    router.put('/group/:id', groupValidator, async (req, res, next) => {
+    router.put('/group/:id', checkToken, groupValidator, async (req, res, next) => {
         try {
             const result = await service.updateGroup(req.body, req.params.id);
             if (result.length === 0) {
@@ -56,7 +57,7 @@ const groupRouter = (service) => {
         }
     });
 
-    router.delete('/group/:id', async (req, res, next) => {
+    router.delete('/group/:id', checkToken, async (req, res, next) => {
         try {
             const result = await service.deleteGroup(req.params.id);
             if (result.length === 0) {
@@ -68,7 +69,7 @@ const groupRouter = (service) => {
         }
     });
 
-    router.post('/group/:id/users/add', async (req, res, next) => {
+    router.post('/group/:id/users/add', checkToken, async (req, res, next) => {
         const id = req.params.id;
         const usersIds = req.body.users;
         console.log(req.body);

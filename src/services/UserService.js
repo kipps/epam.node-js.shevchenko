@@ -37,8 +37,7 @@ export default class UserService {
     }
 
     getUserByLogin(login) {
-        console.log(login);
-        return this.userModel.findAll({
+        return this.userModel.findOne({
             where: {
                 login
             }

@@ -29,7 +29,7 @@ const userRouter = (service) => {
         }
     });
 
-    router.post('/users', userValidator, async (req, res, next) => {
+    router.post('/users', checkToken, userValidator, async (req, res, next) => {
         try {
             const result = await service.creatUser(req.body);
             res.json(result);
@@ -38,7 +38,7 @@ const userRouter = (service) => {
         }
     });
 
-    router.get('/user/:id', async (req, res, next) => {
+    router.get('/user/:id', checkToken, async (req, res, next) => {
         try {
             const result = await service.getUser(req.params.id);
             if (result.length === 0) {
@@ -50,7 +50,7 @@ const userRouter = (service) => {
         }
     });
 
-    router.put('/user/:id', userValidator, async (req, res, next) => {
+    router.put('/user/:id', checkToken, userValidator, async (req, res, next) => {
         try {
             const result = await service.updateUser(req.body, req.params.id);
             if (result.length === 0) {
@@ -62,7 +62,7 @@ const userRouter = (service) => {
         }
     });
 
-    router.delete('/user/:id', async (req, res, next) => {
+    router.delete('/user/:id', checkToken, async (req, res, next) => {
         try {
             const result = await service.deleteUser(req.params.id);
             if (result.length === 0) {
