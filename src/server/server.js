@@ -8,13 +8,13 @@ import groupRouter from '../api/GroupController';
 import authRouter from '../api/AuthenticateController';
 import expressWinston from 'express-winston';
 import winston from 'winston';
-
+import cors from 'cors';
 
 const runServer = (app) => {
     const userService = new UserService(UserModel);
     const groupService = new GroupService(GroupModel);
 
-
+    app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
