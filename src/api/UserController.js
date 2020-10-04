@@ -33,10 +33,10 @@ const userRouter = (service) => {
         try {
             const isUser = await service.getUserByLogin(req.body.login);
             if (isUser === null) {
-              const result = await service.creatUser(req.body);
-              res.json(result);
+                const result = await service.creatUser(req.body);
+                res.json(result);
             } else {
-              return res.status(401).send('We have this one user');
+                return res.status(401).send('We have this one user');
             }
         } catch (err) {
             return next(err);
