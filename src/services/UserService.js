@@ -41,7 +41,7 @@ export default class UserService {
             where: {
                 login
             }
-        })
+        });
     }
 
     creatUser(user) {
