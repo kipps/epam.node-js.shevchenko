@@ -7,7 +7,7 @@
     },
     "Token": {
       "secret_token": "fewfewf3345ewefewfeflkle334",
-      "duration": 10
+      "duration": 100
     }
   }
 }
