@@ -4,12 +4,11 @@
   "description": "Traninig class",
   "main": "src/api/index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "lint": "eslint src ",
     "lint:fix": "eslint src --fix",
     "nodemon-babel": "nodemon --exec babel-node",
-    "start": "npm run nodemon-babel src/app.js",
-    "test": "jest"
+    "start": "npm run nodemon-babel src/app.js"
   },
   "repository": {
     "type": "git",
